@@ -14,7 +14,10 @@
                 height: 100%;
             }
         </style>
+        <script src="jquery-2.1.4.min.js"></script>
         <script>
+            var mousePressed = false;
+            
             function resizeCanvas()
             {
                 var canvas = document.getElementById('canvas');
@@ -27,14 +30,55 @@
             {
                 resizeCanvas();
             }
+            function onMouseDown(pos)
+            {
+                console.log("mouse down at " + pos.x + ", " + pos.y);
+                mousePressed = true;
+            }
+            function onMouseMove(pos)
+            {
+                if(mousePressed)
+                    console.log("mouse moved to " + pos.x + ", " + pos.y);                
+            }
+            function onMouseUp()
+            {
+                mousePressed = false;
+            }
+            function onMouseLeave()
+            {
+                mousePressed = false;
+            }
+            
+            function mouseEventPos(e, target)
+            {
+                var offset = $(target).offset();
+                var x = e.clientX - offset.left;
+                var y = e.clientY - offset.top;
+                return {x: x, y: y};
+            }
         </script>
     </head>
     <body>
         <canvas id="canvas"></canvas>
         
         <script>
-            resizeCanvas();
-            window.addEventListener("resize", onResize);
+            $(document).ready(function(){
+                resizeCanvas();
+                
+                window.addEventListener("resize", onResize);
+                $("#canvas").mousedown(function(e){
+                    onMouseDown(mouseEventPos(e, this));
+                });
+                $("#canvas").mousemove(function(e){
+                    onMouseMove(mouseEventPos(e, this));
+                });
+                $("#canvas").mouseup(function(){
+                    onMouseUp();
+                });
+                $("#canvas").mouseleave(function(){
+                    onMouseLeave();
+                });
+            });
         </script>
     </body>
 </html>
