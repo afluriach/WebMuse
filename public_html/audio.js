@@ -1,20 +1,43 @@
 var audioContext;
 var oscillator;
-var gainNode;
+
+function OscillatorWithGain(type, initialGain, dest)
+{
+    this.oscillator = audioContext.createOscillator();
+    this.oscillator.type = type;
+
+    this.gainNode = audioContext.createGain();
+    this.oscillator.connect(this.gainNode);
+    this.gainNode.connect(dest);
+
+    this.gainNode.gain.value = initialGain;
+    this.oscillator.start();
+}
+//set frequency and start
+OscillatorWithGain.prototype = {
+    start: function()
+    {
+        this.gainNode.gain.value = 1;
+    },
+    setFreq: function(f)
+    {
+        this.oscillator.frequency.value = f;
+    },
+    setNote: function(n)
+    {
+        this.setFreq(computeFrequency(n));
+    },
+    stop: function ()
+    {
+        this.gainNode.gain.value = 0;
+    },
+};
 
 function initAudio()
 {
     audioContext = new AudioContext();
 
-    oscillator = audioContext.createOscillator();
-    oscillator.type = 'triangle';
-
-    gainNode = audioContext.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    gainNode.gain.value = 0;
-    oscillator.start();
+    oscillator = new OscillatorWithGain('triangle', 0, audioContext.destination);
 }            
 
 function computeFrequency(note)
@@ -26,18 +49,18 @@ function computeFrequency(note)
 
 function startAudio()
 {
-    oscillator.frequency.value = getFrequency();
-    gainNode.gain.value = 1;
+    oscillator.setFreq(getFrequency());
+    oscillator.start();
 }
 
 function changeNote()
 {
-    oscillator.frequency.value = getFrequency();
+    oscillator.setFreq(getFrequency());
 }
 
 function endAudio()
 {
-    gainNode.gain.value = 0;
+    oscillator.stop();
 }
 
 //Get current note to play from mouse pos
