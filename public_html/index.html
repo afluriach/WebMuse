@@ -16,7 +16,74 @@
         </style>
         <script src="jquery-2.1.4.min.js"></script>
         <script>
+            var pitchWidth = 5;
+            var pitchCenter = 5;
+            
+            const baseNote = 'C';
+            const baseOctave = 3;
+            const baseFrequency = 130.813;
+            
+            const backgroundSeparatorWidth = 5;
+            const backgroundSeparatorDash =[10,20];
+            const backgroundSeparatorColor ='rgb(230,230,230)';
+            
             var mousePressed = false;
+            var mousePos;
+            
+            var audioContext;
+            var oscillator;
+            var gainNode;
+            
+            function initAudio()
+            {
+                audioContext = new AudioContext();
+                
+                oscillator = audioContext.createOscillator();
+                oscillator.type = 'triangle';
+                
+                gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                gainNode.gain.value = 0;
+                oscillator.start();
+            }            
+            
+            function computeFrequency(note)
+            {
+                var offsetToBase = note-baseOctave;
+                
+                return baseFrequency*Math.pow(2,offsetToBase);
+            }
+            
+            function startAudio()
+            {
+                oscillator.frequency.value = getFrequency();
+                gainNode.gain.value = 1;
+            }
+            
+            function changeNote()
+            {
+                oscillator.frequency.value = getFrequency();
+            }
+            
+            function endAudio()
+            {
+                gainNode.gain.value = 0;
+            }
+            
+            //Get current note to play from mouse pos
+            function getNote()
+            {
+                var octaveInterval = canvas.width / pitchWidth;
+                var startNote = pitchCenter - pitchWidth/2;
+
+                return mousePos.x / octaveInterval + startNote;
+            }
+            function getFrequency(note)
+            {
+                return computeFrequency(getNote());
+            }
             
             function resizeCanvas()
             {
@@ -26,27 +93,78 @@
                 
                 console.log("Canvas resized to " + window.innerWidth + ", " + window.innerHeight);
             }
+            function drawLine(ctx,x1,y1,x2,y2,width,style)
+            {
+                ctx.strokeStyle = style;
+                ctx.lineWidth = width;
+
+                ctx.beginPath();
+                ctx.moveTo(x1,y1);
+                ctx.lineTo(x2,y2);
+                ctx.stroke();
+            }
+            function renderBackground()
+            {
+                var canvas = $("#canvas").get(0);
+                var ctx = canvas.getContext("2d");
+                
+                ctx.clearRect(0,0,canvas.width, canvas.height);
+                
+                ctx.fillStyle = "rgb(50,50,80)";
+                ctx.fillRect(0,0,canvas.width, canvas.height);
+                
+                //draw octave separators
+                var lineInterval = canvas.width / pitchWidth;
+                var startOctave = pitchCenter - (lineInterval - canvas.width/2);
+                var offsetToFirstOctaveSep = Math.ceil(startOctave) - startOctave;
+                var offsetPix = offsetToFirstOctaveSep*lineInterval;
+                var linesToDraw = Math.floor(pitchWidth - offsetToFirstOctaveSep) + 1;
+                
+                ctx.setLineDash(backgroundSeparatorDash);
+                for(var i=0;i<linesToDraw; ++i)
+                {
+                    var x = offsetPix+lineInterval*i;
+                    drawLine(
+                        ctx,
+                        x,
+                        0,
+                        x,
+                        canvas.height,
+                        backgroundSeparatorWidth,
+                        backgroundSeparatorColor
+                    );
+                }
+                ctx.setLineDash([]);
+            }
             function onResize()
             {
                 resizeCanvas();
+                renderBackground();
             }
             function onMouseDown(pos)
             {
-                console.log("mouse down at " + pos.x + ", " + pos.y);
+                //console.log("mouse down at " + pos.x + ", " + pos.y);
+                mousePos = pos;
                 mousePressed = true;
+                startAudio();
             }
             function onMouseMove(pos)
             {
-                if(mousePressed)
-                    console.log("mouse moved to " + pos.x + ", " + pos.y);                
+                mousePos = pos;
+                if(mousePressed){
+                    //console.log("mouse moved to " + pos.x + ", " + pos.y);
+                    changeNote();
+                }
             }
             function onMouseUp()
             {
                 mousePressed = false;
+                endAudio();
             }
             function onMouseLeave()
             {
                 mousePressed = false;
+                endAudio();
             }
             
             function mouseEventPos(e, target)
@@ -63,7 +181,8 @@
         
         <script>
             $(document).ready(function(){
-                resizeCanvas();
+                onResize();
+                initAudio();
                 
                 window.addEventListener("resize", onResize);
                 $("#canvas").mousedown(function(e){
