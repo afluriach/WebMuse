@@ -15,9 +15,9 @@ function OscillatorWithGain(type, initialGain, dest)
 }
 //set frequency and start
 OscillatorWithGain.prototype = {
-    start: function()
+    setGain: function(gain)
     {
-        this.gainNode.gain.value = 1;
+        this.gainNode.gain.value = gain;
     },
     setFreq: function(f)
     {
@@ -29,7 +29,7 @@ OscillatorWithGain.prototype = {
     },
     stop: function ()
     {
-        this.gainNode.gain.value = 0;
+        this.setGain(0);
     },
 };
 
@@ -50,12 +50,13 @@ function computeFrequency(note)
 function startAudio()
 {
     oscillator.setNote(getNoteFromCanvas());
-    oscillator.start();
+    oscillator.setGain(1-getVerticalFromCanvas());
 }
 
 function changeNote()
 {
     oscillator.setNote(getNoteFromCanvas());
+    oscillator.setGain(1-getVerticalFromCanvas());
 }
 
 function endAudio()
@@ -70,4 +71,9 @@ function getNoteFromCanvas()
     var startNote = pitchCenter - pitchWidth/2;
 
     return mousePos.x / octaveInterval + startNote;
+}
+
+function getVerticalFromCanvas()
+{
+    return mousePos.y / canvas.height;
 }
