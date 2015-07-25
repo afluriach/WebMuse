@@ -64,7 +64,7 @@ function endAudio()
 }
 
 //Get current note to play from mouse pos
-function getNote()
+function getNoteFromCanvas()
 {
     var octaveInterval = canvas.width / pitchWidth;
     var startNote = pitchCenter - pitchWidth/2;
@@ -73,5 +73,5 @@ function getNote()
 }
 function getFrequency()
 {
-    return computeFrequency(getNote());
+    return computeFrequency(getNoteFromCanvas());
 }
