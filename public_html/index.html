@@ -25,22 +25,7 @@
         
         <script>
             $(document).ready(function(){
-                onResize();
-                initAudio();
-                
-                window.addEventListener("resize", onResize);
-                $("#canvas").mousedown(function(e){
-                    onMouseDown(mouseEventPos(e, this));
-                });
-                $("#canvas").mousemove(function(e){
-                    onMouseMove(mouseEventPos(e, this));
-                });
-                $("#canvas").mouseup(function(){
-                    onMouseUp();
-                });
-                $("#canvas").mouseleave(function(){
-                    onMouseLeave();
-                });
+                init();
             });
         </script>
     </body>

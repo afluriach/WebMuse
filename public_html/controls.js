@@ -34,3 +34,20 @@ function mouseEventPos(e, target)
     var y = e.clientY - offset.top;
     return {x: x, y: y};
 }
+
+function addControlCallbacks()
+{
+    window.addEventListener("resize", onResize);
+    $("#canvas").mousedown(function(e){
+        onMouseDown(mouseEventPos(e, this));
+    });
+    $("#canvas").mousemove(function(e){
+        onMouseMove(mouseEventPos(e, this));
+    });
+    $("#canvas").mouseup(function(){
+        onMouseUp();
+    });
+    $("#canvas").mouseleave(function(){
+        onMouseLeave();
+    });
+}
