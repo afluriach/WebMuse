@@ -1,20 +1,22 @@
 var audioContext;
 var oscillator;
 
-function OscillatorWithGain(type, initialGain, dest)
+function OscillatorWithGain(dest)
 {
     this.oscillator = audioContext.createOscillator();
-    this.oscillator.type = type;
 
     this.gainNode = audioContext.createGain();
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(dest);
 
-    this.gainNode.gain.value = initialGain;
-    this.oscillator.start();
+    this.gainNode.gain.value = 0;
 }
 //set frequency and start
 OscillatorWithGain.prototype = {
+    _connectAndStart: function()
+    {
+        
+    },
     setGain: function(gain)
     {
         this.gainNode.gain.value = gain;
@@ -32,12 +34,19 @@ OscillatorWithGain.prototype = {
         this.setGain(0);
     },
 };
+OscillatorWithGain.createFromBuiltinType = function(dest, type)
+{
+    var osc = new OscillatorWithGain(dest);
+    osc.oscillator.type = type;
+    osc.oscillator.start();
+    return osc;
+};
 
 function initAudio()
 {
     audioContext = new AudioContext();
 
-    oscillator = new OscillatorWithGain('triangle', 0, audioContext.destination);
+    oscillator = OscillatorWithGain.createFromBuiltinType(audioContext.destination, 'triangle');
 }            
 
 function computeFrequency(note)
