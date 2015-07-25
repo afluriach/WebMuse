@@ -49,13 +49,13 @@ function computeFrequency(note)
 
 function startAudio()
 {
-    oscillator.setFreq(getFrequency());
+    oscillator.setNote(getNoteFromCanvas());
     oscillator.start();
 }
 
 function changeNote()
 {
-    oscillator.setFreq(getFrequency());
+    oscillator.setNote(getNoteFromCanvas());
 }
 
 function endAudio()
@@ -70,8 +70,4 @@ function getNoteFromCanvas()
     var startNote = pitchCenter - pitchWidth/2;
 
     return mousePos.x / octaveInterval + startNote;
-}
-function getFrequency()
-{
-    return computeFrequency(getNoteFromCanvas());
 }
