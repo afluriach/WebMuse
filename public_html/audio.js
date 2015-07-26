@@ -54,7 +54,7 @@ OscillatorWithGain.createFromWaveformTable = function(dest, real, imag)
 function initAudio()
 {
     audioContext = new AudioContext();
-    loadInstrument($("#instruments").val());
+    loadInstrument("01_Saw");
 }            
 
 function loadInstrument(instrument)

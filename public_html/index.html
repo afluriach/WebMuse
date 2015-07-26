@@ -26,11 +26,10 @@
         <script src="tables.js"></script>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
-        <div id="settings">
-            Instrument: <select id="instruments"></select>
-            <p> {{'angular' + ' is ' + 'running'}}</p>
-        </div>
+    	<a href="#/play">Play instrument</a>
+    	<a href="#/graph">Configure instrument/effects graph</a><br>
+    	
+    	<div ng-view></div>
         <script>
             $(document).ready(function(){
                 init();

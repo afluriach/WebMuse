@@ -38,6 +38,10 @@ function mouseEventPos(e, target)
 function addControlCallbacks()
 {
     window.addEventListener("resize", onResize);
+}
+
+function addPlayViewMouseListeners()
+{
     $("#canvas").mousedown(function(e){
         onMouseDown(mouseEventPos(e, this));
     });
