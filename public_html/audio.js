@@ -95,7 +95,7 @@ function endAudio()
 //Get current note to play from mouse pos
 function getNoteFromCanvas()
 {
-    var octaveInterval = canvas.width / pitchWidth;
+    var octaveInterval = $('#playCanvas').get(0).width / pitchWidth;
     var startNote = pitchCenter - pitchWidth/2;
 
     return mousePos.x / octaveInterval + startNote;
@@ -103,5 +103,5 @@ function getNoteFromCanvas()
 
 function getVerticalFromCanvas()
 {
-    return mousePos.y / canvas.height;
+    return mousePos.y / $('#playCanvas').get(0).height;
 }
