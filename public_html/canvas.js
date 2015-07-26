@@ -2,7 +2,7 @@ function resizeCanvas()
 {
     var canvas = document.getElementById('canvas');
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight*0.8;
 
     console.log("Canvas resized to " + window.innerWidth + ", " + window.innerHeight);
 }

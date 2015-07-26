@@ -41,13 +41,32 @@ OscillatorWithGain.createFromBuiltinType = function(dest, type)
     osc.oscillator.start();
     return osc;
 };
+OscillatorWithGain.createFromWaveformTable = function(dest, real, imag)
+{
+    var osc = new OscillatorWithGain(dest);
+    var wave = audioContext.createPeriodicWave(real, imag);
+    
+    osc.oscillator.setPeriodicWave(wave);
+    osc.oscillator.start();
+    return osc;
+};
 
 function initAudio()
 {
     audioContext = new AudioContext();
-
-    oscillator = OscillatorWithGain.createFromBuiltinType(audioContext.destination, 'triangle');
+    loadInstrument($("#instruments").val());
 }            
+
+function loadInstrument(instrument)
+{
+    if(oscillator)
+        oscillator.stop();
+    
+    var real = initTypedArray(Float32Array, waveTables[instrument].real);
+    var imag = initTypedArray(Float32Array, waveTables[instrument].imag);
+    
+    oscillator = OscillatorWithGain.createFromWaveformTable(audioContext.destination,real,imag);
+}
 
 function computeFrequency(note)
 {

@@ -11,7 +11,37 @@ const backgroundSeparatorColor ='rgb(230,230,230)';
 
 function init()
 {
+    loadInstrumentsList();
     onResize();
     initAudio();
     addControlCallbacks();
+    attachElementCallbacks();
+}
+
+function loadInstrumentsList()
+{
+    for(var instrument in waveTables)
+    {
+        var prettyName = instrument.replace(new RegExp("_", "g"), " ");
+
+        var option = $("<option>");
+        option.attr('value', instrument);
+        option.attr('label', prettyName);
+
+        $("#instruments").append(option);
+    }
+}
+
+function attachElementCallbacks()
+{
+    $("#instruments").change(function(){
+        loadInstrument($("#instruments").val());
+    });
+}
+
+function initTypedArray(arrType, input)
+{
+    var typed = new arrType(input.length);
+    typed.set(input);
+    return typed;
 }
