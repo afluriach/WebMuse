@@ -48,13 +48,6 @@ function loadInstrumentsList()
     }
 }
 
-function attachElementCallbacks()
-{
-    $("#instruments").change(function(){
-        loadInstrument($("#instruments").val());
-    });
-}
-
 function initTypedArray(arrType, input)
 {
     var typed = new arrType(input.length);

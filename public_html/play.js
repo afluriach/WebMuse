@@ -1,7 +1,9 @@
 webMuse.controller('PlayView', function($scope){
 	loadInstrumentsList();
 	onResize();
-    attachElementCallbacks();
+    $("#instruments").change(function(){
+        loadInstrument($("#instruments").val());
+    });
     
     new CanvasMouseListener(playMouseEvents, 'playCanvas');
 });
