@@ -44,20 +44,6 @@ function init()
     });
 }
 
-function loadInstrumentsList()
-{
-    for(var instrument in waveTables)
-    {
-        var prettyName = instrument.replace(new RegExp("_", "g"), " ");
-
-        var option = $("<option>");
-        option.attr('value', instrument);
-        option.attr('label', prettyName);
-
-        $("#instruments").append(option);
-    }
-}
-
 function makeTypedArray(arrType, input)
 {
     var typed = new arrType(input.length);
