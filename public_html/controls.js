@@ -1,31 +1,26 @@
 var mousePressed = false;
 var mousePos;
 
-function onMouseDown(pos)
+function CanvasMouseListener(events, canvasId)
 {
-    //console.log("mouse down at " + pos.x + ", " + pos.y);
-    mousePos = pos;
-    mousePressed = true;
-    startAudio();
+    if(events.mousedown)
+        $("#"+canvasId).mousedown(function(e){
+            events.mousedown(mouseEventPos(e, this));
+        });
+    if(events.mousemove)
+        $("#"+canvasId).mousemove(function(e){
+            events.mousemove(mouseEventPos(e, this));
+        });
+    if(events.mouseup)
+        $("#"+canvasId).mouseup(function(){
+            events.mouseup();
+        });
+    if(events.mouseleave)
+        $("#"+canvasId).mouseleave(function(){
+            events.mouseleave();
+        });
 }
-function onMouseMove(pos)
-{
-    mousePos = pos;
-    if(mousePressed){
-        //console.log("mouse moved to " + pos.x + ", " + pos.y);
-        changeNote();
-    }
-}
-function onMouseUp()
-{
-    mousePressed = false;
-    endAudio();
-}
-function onMouseLeave()
-{
-    mousePressed = false;
-    endAudio();
-}
+
 
 function mouseEventPos(e, target)
 {
@@ -38,20 +33,4 @@ function mouseEventPos(e, target)
 function addControlCallbacks()
 {
     window.addEventListener("resize", onResize);
-}
-
-function addPlayViewMouseListeners()
-{
-    $("#playCanvas").mousedown(function(e){
-        onMouseDown(mouseEventPos(e, this));
-    });
-    $("#playCanvas").mousemove(function(e){
-        onMouseMove(mouseEventPos(e, this));
-    });
-    $("#playCanvas").mouseup(function(){
-        onMouseUp();
-    });
-    $("#playCanvas").mouseleave(function(){
-        onMouseLeave();
-    });
 }
