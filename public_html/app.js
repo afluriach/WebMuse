@@ -9,6 +9,8 @@ const backgroundSeparatorWidth = 5;
 const backgroundSeparatorDash =[10,20];
 const backgroundSeparatorColor ='rgb(230,230,230)';
 
+var webMuse = angular.module('webMuse', []);
+
 function init()
 {
     loadInstrumentsList();
