@@ -1,0 +1,13 @@
+{
+	"name": "web-muse",
+	"version": "0.0.1",
+	"author": "ESS",
+	"dependencies" : {
+		"bower": "^1.3.1",
+		"http-server": "^0.6.1"
+	},
+	"scripts" : {
+		"postinstall"  : "bower install",
+		"start" : "http-server public_html -a localhost -p 8000 -c-1"
+	}
+}
