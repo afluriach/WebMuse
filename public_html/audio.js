@@ -62,8 +62,8 @@ function loadInstrument(instrument)
     if(oscillator)
         oscillator.stop();
     
-    var real = initTypedArray(Float32Array, waveTables[instrument].real);
-    var imag = initTypedArray(Float32Array, waveTables[instrument].imag);
+    var real = makeTypedArray(Float32Array, waveTables[instrument].real);
+    var imag = makeTypedArray(Float32Array, waveTables[instrument].imag);
     
     oscillator = OscillatorWithGain.createFromWaveformTable(audioContext.destination,real,imag);
 }

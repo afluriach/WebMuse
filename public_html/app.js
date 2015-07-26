@@ -58,7 +58,7 @@ function loadInstrumentsList()
     }
 }
 
-function initTypedArray(arrType, input)
+function makeTypedArray(arrType, input)
 {
     var typed = new arrType(input.length);
     typed.set(input);
