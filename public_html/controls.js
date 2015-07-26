@@ -42,16 +42,16 @@ function addControlCallbacks()
 
 function addPlayViewMouseListeners()
 {
-    $("#canvas").mousedown(function(e){
+    $("#playCanvas").mousedown(function(e){
         onMouseDown(mouseEventPos(e, this));
     });
-    $("#canvas").mousemove(function(e){
+    $("#playCanvas").mousemove(function(e){
         onMouseMove(mouseEventPos(e, this));
     });
-    $("#canvas").mouseup(function(){
+    $("#playCanvas").mouseup(function(){
         onMouseUp();
     });
-    $("#canvas").mouseleave(function(){
+    $("#playCanvas").mouseleave(function(){
         onMouseLeave();
     });
 }

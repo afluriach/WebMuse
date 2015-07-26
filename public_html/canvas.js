@@ -1,10 +1,10 @@
 function resizeCanvas()
 {
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('playCanvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight*0.8;
 
-    console.log("Canvas resized to " + window.innerWidth + ", " + window.innerHeight);
+    console.log("playCanvas resized to " + window.innerWidth + ", " + window.innerHeight);
 }
 function drawLine(ctx,x1,y1,x2,y2,width,style)
 {
@@ -18,7 +18,7 @@ function drawLine(ctx,x1,y1,x2,y2,width,style)
 }
 function renderBackground()
 {
-    var canvas = $("#canvas").get(0);
+    var canvas = $("#playCanvas").get(0);
     var ctx = canvas.getContext("2d");
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
