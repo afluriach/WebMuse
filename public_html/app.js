@@ -11,13 +11,6 @@ const backgroundSeparatorColor ='rgb(230,230,230)';
 
 var webMuse = angular.module('webMuse', ['ngRoute']);
 
-webMuse.controller('PlayView', function($scope){
-	loadInstrumentsList();
-	addPlayViewMouseListeners();
-	onResize();
-    attachElementCallbacks();
-});
-
 webMuse.controller('GraphView', function($scope){
 
 });
