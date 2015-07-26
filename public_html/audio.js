@@ -101,7 +101,11 @@ function getNoteFromCanvas()
     return mousePos.x / octaveInterval + startNote;
 }
 
+//Anything above the margin (numberically below) should be 0.
 function getVerticalFromCanvas()
 {
+    if(mousePos.y < instrumentEdgeMargin)
+        return 0;
+    
     return mousePos.y / $('#playCanvas').get(0).height;
 }

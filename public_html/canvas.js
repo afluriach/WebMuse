@@ -1,3 +1,5 @@
+const instrumentEdgeMargin = 60;
+
 function resizePlayCanvas()
 {
     var canvas = document.getElementById('playCanvas');
@@ -24,23 +26,38 @@ function renderPlayBackground()
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
     ctx.fillStyle = "rgb(50,50,80)";
+    ctx.strokeStyle = backgroundSeparatorColor;
+    ctx.font = '30px serif';
+
     ctx.fillRect(0,0,canvas.width, canvas.height);
+
+    drawLine(
+        ctx,
+        0,
+        instrumentEdgeMargin,
+        canvas.width,
+        instrumentEdgeMargin,
+        backgroundSeparatorWidth,
+        backgroundSeparatorColor
+    );
 
     //draw octave separators
     var lineInterval = canvas.width / pitchWidth;
-    var startOctave = pitchCenter - (lineInterval - canvas.width/2);
-    var offsetToFirstOctaveSep = Math.ceil(startOctave) - startOctave;
-    var offsetPix = offsetToFirstOctaveSep*lineInterval;
-    var linesToDraw = Math.floor(pitchWidth - offsetToFirstOctaveSep) + 1;
+    var leftEdgeNote = pitchCenter - (lineInterval - canvas.width/2);
+    var offsetToFirstOctaveStep = Math.ceil(leftEdgeNote) - leftEdgeNote;
+    var offsetPix = offsetToFirstOctaveStep*lineInterval;
+    var linesToDraw = Math.floor(pitchWidth - offsetToFirstOctaveStep) + 1;
+    var firstOctave = Math.ceil(pitchCenter - pitchWidth/2);
 
     ctx.setLineDash(backgroundSeparatorDash);
     for(var i=0;i<linesToDraw; ++i)
     {
         var x = offsetPix+lineInterval*i;
+        
         drawLine(
             ctx,
             x,
-            0,
+            instrumentEdgeMargin,
             x,
             canvas.height,
             backgroundSeparatorWidth,
@@ -48,4 +65,15 @@ function renderPlayBackground()
         );
     }
     ctx.setLineDash([]);
+    
+    for(var i=0;i<linesToDraw; ++i)
+    {
+        var x = offsetPix+lineInterval*i;
+        
+        ctx.strokeText(
+            baseNote+(firstOctave+i),
+            x,
+            instrumentEdgeMargin/2
+        );
+    }
 }
