@@ -32,5 +32,5 @@ function mouseEventPos(e, target)
 
 function addControlCallbacks()
 {
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", playViewResize);
 }

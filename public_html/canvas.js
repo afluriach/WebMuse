@@ -1,4 +1,4 @@
-function resizeCanvas()
+function resizePlayCanvas()
 {
     var canvas = document.getElementById('playCanvas');
     canvas.width = window.innerWidth;
@@ -49,8 +49,8 @@ function renderBackground()
     }
     ctx.setLineDash([]);
 }
-function onResize()
+function playViewResize()
 {
-    resizeCanvas();
+    resizePlayCanvas();
     renderBackground();
 }

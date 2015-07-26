@@ -1,6 +1,6 @@
 webMuse.controller('PlayView', function($scope){
 	loadInstrumentsList();
-	onResize();
+	playViewResize();
     $("#instruments").change(function(){
         loadInstrument($("#instruments").val());
     });
