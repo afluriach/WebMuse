@@ -39,6 +39,6 @@ var playMouseEvents = {
 function playViewResize()
 {
     resizePlayCanvas();
-    renderBackground();
+    renderPlayBackground();
 }
 resizeHandlers.push({obj: "#playCanvas", f: playViewResize});

@@ -16,7 +16,7 @@ function drawLine(ctx,x1,y1,x2,y2,width,style)
     ctx.lineTo(x2,y2);
     ctx.stroke();
 }
-function renderBackground()
+function renderPlayBackground()
 {
     var canvas = $("#playCanvas").get(0);
     var ctx = canvas.getContext("2d");
