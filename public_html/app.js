@@ -9,6 +9,9 @@ const backgroundSeparatorWidth = 5;
 const backgroundSeparatorDash =[10,20];
 const backgroundSeparatorColor ='rgb(230,230,230)';
 
+//Elements should be {obj: jquery obj or selector, f: function}
+var resizeHandlers = [];
+
 var webMuse = angular.module('webMuse', ['ngRoute']);
 
 webMuse.controller('GraphView', function($scope){
@@ -31,7 +34,14 @@ webMuse.config(['$routeProvider',
 function init()
 {
     initAudio();
-    addControlCallbacks();
+    window.addEventListener("resize", function(){
+        //Only call the callback once if the selector matches any object
+        for(var callback of resizeHandlers){
+            if($(callback.obj).length){
+                callback.f();
+            };
+        }
+    });
 }
 
 function loadInstrumentsList()

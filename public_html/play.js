@@ -35,3 +35,10 @@ var playMouseEvents = {
         endAudio();
     }
 };
+
+function playViewResize()
+{
+    resizePlayCanvas();
+    renderBackground();
+}
+resizeHandlers.push({obj: "#playCanvas", f: playViewResize});

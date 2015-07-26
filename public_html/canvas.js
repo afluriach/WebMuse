@@ -49,8 +49,3 @@ function renderBackground()
     }
     ctx.setLineDash([]);
 }
-function playViewResize()
-{
-    resizePlayCanvas();
-    renderBackground();
-}

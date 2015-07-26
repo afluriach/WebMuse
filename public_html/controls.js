@@ -29,8 +29,3 @@ function mouseEventPos(e, target)
     var y = e.clientY - offset.top;
     return {x: x, y: y};
 }
-
-function addControlCallbacks()
-{
-    window.addEventListener("resize", playViewResize);
-}
