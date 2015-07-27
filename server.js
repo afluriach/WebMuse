@@ -53,13 +53,15 @@ requestHandlers['/login'] = function(request, response)
 				'Content-Type': 'text/plain',
 				'Access-Control-Allow-Origin' : validOrigin
 			});
+			response.statusCode = 200;
+			response.write(data.user[0] === 'a' ? "LOGIN OK" : "LOGIN FAIL");
+			response.end();
 		}catch(e){
 			console.log("Invalid JSON for login: " + request.body); 
+			response.statusCode = 400;
+			response.write("MALFORMED REQUEST");
+			response.end();
 		}
-
-		response.statusCode = 200;
-		response.write(data.user[0] === 'a' ? "LOGIN OK" : "LOGIN FAIL");
-		response.end();
 	});
 }
 
