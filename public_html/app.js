@@ -20,6 +20,10 @@ webMuse.controller('GraphView', function($scope){
 
 webMuse.config(['$routeProvider',
 	function($routeProvider){
+		$routeProvider.when('/login', {
+			templateUrl: 'login_view.html',
+			controller: 'LoginView'
+		});
 		$routeProvider.when('/play', {
 			templateUrl: 'play_view.html',
 			controller: 'PlayView'

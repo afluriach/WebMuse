@@ -8,6 +8,7 @@
 	},
 	"scripts" : {
 		"postinstall"  : "bower install",
-		"start" : "http-server public_html -a localhost -p 8000 -c-1"
+		"start" : "node server.js && http-server public_html -a localhost -p 8000 -c-1",
+		"start-http" : "http-server public_html -a localhost -p 8000 -c-1"
 	}
 }
