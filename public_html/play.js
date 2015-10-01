@@ -75,7 +75,7 @@ webMuse.controller('SongPlayView', function($scope){
     
     assignOnClick("#play", function(){        
         if(canPlay()){
-            playbackHandler = new PlaybackHandler(currentTrack);
+            playbackHandler = new PlaybackHandler(currentTrack, onStopPlayback);
             playbackHandler.start();
         
             setEnabled("#record", false);
@@ -85,24 +85,39 @@ webMuse.controller('SongPlayView', function($scope){
     });
     
     assignOnClick("#stop", function(){
-        webMuse.recording = false;
-        
-        if(playbackHandler){
-            playbackHandler.stop();
-            playbackHandler = null;
+        if(webMuse.recording){
+            onStopRecording();
         }
+        else if(playbackHandler){
+            onStopPlayback();
+        }
+    });
     
+    //Called in the callback for the stop button, but also when the playback handler
+    //stops at the end of the track. 
+    function onStopPlayback(){
+        playbackHandler.stop();
+        playbackHandler = null;
+        enableButtonsAfterStop();
+    }
+    function onStopRecording(){
+        webMuse.recording = false;
+        enableButtonsAfterStop();
+    }
+    function enableButtonsAfterStop()
+    {
         setEnabled("#record", true);
         setEnabled("#play", true);
         setEnabled("#stop", false);
-    });    
+    } 
 });
 
-function PlaybackHandler(track)
+function PlaybackHandler(track, onStop)
 {
     var timerInterval = 1;
 
     this.track = track;
+    this.onStop = onStop;
 
     //The index of the currently playing note or next upcoming note.
     this.currentNote = 0;
@@ -119,6 +134,7 @@ function PlaybackHandler(track)
             this.playbackTimer.stop();
             endAudio();
             this.stopped = true;
+            this.onStop();
         }
     }
     this.tick = function()
