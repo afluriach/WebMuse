@@ -75,16 +75,16 @@ function computeFrequency(note)
     return baseFrequency*Math.pow(2,offsetToBase);
 }
 
-function startAudio()
+function startAudio(note, gain)
 {
-    oscillator.setNote(getNoteFromCanvas());
-    oscillator.setGain(1-getVerticalFromCanvas());
+    oscillator.setNote(note);
+    oscillator.setGain(gain);
 }
 
-function changeNote()
+function changeAudioNote(note, gain)
 {
-    oscillator.setNote(getNoteFromCanvas());
-    oscillator.setGain(1-getVerticalFromCanvas());
+    oscillator.setNote(note);
+    oscillator.setGain(gain);
 }
 
 function endAudio()

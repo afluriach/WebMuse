@@ -7,5 +7,19 @@
 
 <canvas id="playCanvas"></canvas>
 <div id="settings">
+</div>
+
+<div ng-controller="SongPlayView">
+    <button id="record">Rec</button>
+    <button id="play">Play</button>
+    <button id="stop">Stop</button>
+    
+    <br>
+
+<!-- For now it is just one track with a waveform selector. Eventually
+it will be a repeat foreach track. Track may choose input device(?) or this
+may be better handled in the sound graph.-->
 	Instrument: <select id="instruments"></select>
+
+
 </div>

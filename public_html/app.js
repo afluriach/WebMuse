@@ -54,3 +54,13 @@ function makeTypedArray(arrType, input)
     typed.set(input);
     return typed;
 }
+
+function assignOnClick(jquerySelector, onClick)
+{
+    $(jquerySelector).get(0).onclick = onClick;
+}
+
+function setEnabled(jquerySelector, bool)
+{
+    $(jquerySelector).prop('disabled', !bool);
+}
