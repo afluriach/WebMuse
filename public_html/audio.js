@@ -107,5 +107,5 @@ function getVerticalFromCanvas()
     if(mousePos.y < instrumentEdgeMargin)
         return 0;
     
-    return mousePos.y / $('#playCanvas').get(0).height;
+    return (mousePos.y-instrumentEdgeMargin) / ($('#playCanvas').get(0).height-instrumentEdgeMargin);
 }
